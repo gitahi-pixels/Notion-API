@@ -1,11 +1,13 @@
 const { Client } = require("@notionhq/client");
+const fs = require("fs");
+const path = require("path");
 
 require("dotenv").config();
 
 // Exit if no query is provided
 const query = process.argv[2];
 if (!query) {
-  console.log("Query not found! Please provide another query...");
+  console.log("Please input query prompt...");
   process.exit(1);
 }
 
@@ -21,4 +23,21 @@ async function getDatabaseID() {
   });
 }
 
-getDatabaseID();
+// getDatabaseID();
+
+async function importPages() {
+  // Retrieve pages from the database
+  let { results: pages } = await notion.databases.query({
+    database_id: process.env.NOTION_DATABASE_ID,
+  });
+
+  // TODO -> Attach blocks to pages
+
+  // Write the results to file
+  const outputFile = path.join(__dirname, "notion-export.json");
+  fs.writeFileSync(outputFile, JSON.stringify(pages, null, 2));
+  console.log(`wrote ${pages.length} pages to ${outputFile}`);
+
+}
+
+importPages();
