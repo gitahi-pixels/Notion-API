@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gitahi-pixels/Notion-API#readme",
   "dependencies": {
-    "@notionhq/client": "^2.2.13"
+    "@notionhq/client": "^2.2.13",
+    "dotenv": "^16.3.1"
   }
 }
